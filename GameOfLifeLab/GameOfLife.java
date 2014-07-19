@@ -1,40 +1,121 @@
-
+import info.gridworld.actor.Actor;
+import info.gridworld.actor.ActorWorld;
+import info.gridworld.actor.Rock;
+import info.gridworld.grid.BoundedGrid;
+import info.gridworld.grid.Location;
 
 /**
- * Write a description of class GameOfLife here.
+ * Game of Life starter code. Demonstrates how to create and populate the game using the GridWorld framework.
+ * Also demonstrates how to provide accessor methods to make the class testable by unit tests.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author @gcschmit
+ * @version 18 July 2014
  */
 public class GameOfLife
 {
-    /** description of instance variable x (add comment for each instance variable) */
-    private int x;
+    // the grid of Actors that maintains the state of the game (alive cells contains actors; dead cells do not)
+    private BoundedGrid<Actor> grid;
+    
+    // the world comprised of the grid that displays the graphics for the game
+    private ActorWorld world;
+    
+    // the game board will have 5 rows and 5 columns
+    private final int ROWS = 5;
+    private final int COLS = 5;
+    
+    // constants for the location of the three cells initially alive
+    private final int X1 = 0, Y1 = 2;
+    private final int X2 = 2, Y2 = 0;
+    private final int X3 = 2, Y3 = 1;
 
     /**
      * Default constructor for objects of class GameOfLife
+     * 
+     * @post    the game will be initialized and populated with the initial state of cells
+     * 
      */
     public GameOfLife()
     {
-        // initialise instance variables
-        x = 0;
+        // create the grid, of the specified size, that contains Actors
+        grid = new BoundedGrid<Actor>(ROWS, COLS);
+        
+        // create a world based on the grid
+        world = new ActorWorld(grid);
+        
+        // populate the game
+        populateGame();
+        
+        // display the newly constructed and populated world
+        world.show();
+        
+    }
+    
+    /**
+     * Creates the actors and inserts them into their initial starting positions in the grid
+     *
+     * @pre     the grid has been created
+     * @post    all actors that comprise the initial state of the game have been added to the grid
+     * 
+     */
+    private void populateGame()
+    {
+        // create and add rocks (a type of Actor) to the three intial locations
+        Rock rock1 = new Rock();
+        Location loc1 = new Location(X1, Y1);
+        grid.put(loc1, rock1);
+        
+        Rock rock2 = new Rock();
+        Location loc2 = new Location(X2, Y2);
+        grid.put(loc2, rock2);
+        
+        Rock rock3 = new Rock();
+        Location loc3 = new Location(X3, Y3);
+        grid.put(loc3, rock3);
     }
 
     /**
-     * An example of a method - replace this comment with your own
-     *    that describes the operation of the method
+     * Returns the actor at the specified row and column. Intended to be used for unit testing.
      *
-     * @pre        preconditions for the method
-     *            (what the method assumes about the method's parameters and class's state)
-     * @post    postconditions for the method
-     *            (what the method guarantees upon completion)
-     * @param    y    description of parameter y
-     * @return    description of the return value
+     * @param   row the row (zero-based index) of the actor to return
+     * @param   col the column (zero-based index) of the actor to return
+     * @pre     the grid has been created
+     * @return  the actor at the specified row and column
      */
-    public int sampleMethod(int y)
+    public Actor getActor(int row, int col)
     {
-        // put your code here
-        return x+y;
+        Location loc = new Location(row, col);
+        Actor actor = grid.get(loc);
+        return actor;
+    }
+
+    /**
+     * Returns the number of rows in the game board
+     *
+     * @return    the number of rows in the game board
+     */
+    public int getNumRows()
+    {
+        return ROWS;
+    }
+    
+    /**
+     * Returns the number of columns in the game board
+     *
+     * @return    the number of columns in the game board
+     */
+    public int getNumCols()
+    {
+        return COLS;
+    }
+    
+    
+    /**
+     * Creates an instance of this class. Provides convenient execution.
+     *
+     */
+    public static void main(String[] args)
+    {
+        GameOfLife game = new GameOfLife();
     }
 
 }
