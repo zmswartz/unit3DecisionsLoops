@@ -57,7 +57,7 @@ public class Magpie3
 	 * sensitive. This method will check that the given goal
 	 * is not a substring of a longer string (so, for
 	 * example, "I know" does not contain "no").
-	 * 
+	 *
 	 * @param statement
 	 *            the string to search
 	 * @param goal
@@ -71,11 +71,12 @@ public class Magpie3
 	private int findKeyword(String statement, String goal,
 			int startPos)
 	{
-		String phrase = statement.trim();
+		String phrase = statement.trim().toLowerCase();
+		goal = goal.toLowerCase();
+
 		// The only change to incorporate the startPos is in
 		// the line below
-		int psn = phrase.toLowerCase().indexOf(
-				goal.toLowerCase(), startPos);
+		int psn = phrase.indexOf(goal, startPos);
 
 		// Refinement--make sure the goal isn't part of a
 		// word
@@ -86,15 +87,13 @@ public class Magpie3
 			String before = " ", after = " ";
 			if (psn > 0)
 			{
-				before = phrase.substring(psn - 1, psn)
-						.toLowerCase();
+				before = phrase.substring(psn - 1, psn);
 			}
 			if (psn + goal.length() < phrase.length())
 			{
 				after = phrase.substring(
 						psn + goal.length(),
-						psn + goal.length() + 1)
-						.toLowerCase();
+						psn + goal.length() + 1);
 			}
 
 			// If before and after aren't letters, we've
@@ -110,8 +109,7 @@ public class Magpie3
 
 			// The last position didn't work, so let's find
 			// the next, if there is one.
-			psn = phrase.indexOf(goal.toLowerCase(),
-					psn + 1);
+			psn = phrase.indexOf(goal, psn + 1);
 
 		}
 
