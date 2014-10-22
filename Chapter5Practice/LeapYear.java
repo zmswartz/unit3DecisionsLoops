@@ -1,4 +1,4 @@
-
+import java.util.Scanner;
 
 /**
  * Write a description of class LeapYear here.
@@ -8,18 +8,6 @@
  */
 public class LeapYear
 {
-    /** description of instance variable x (add comment for each instance variable) */
-    private int x;
-
-    /**
-     * Default constructor for objects of class LeapYear
-     */
-    public LeapYear()
-    {
-        // initialise instance variables
-        x = 0;
-    }
-
     /**
      * An example of a method - replace this comment with your own
      *    that describes the operation of the method
@@ -31,10 +19,22 @@ public class LeapYear
      * @param    y    description of parameter y
      * @return    description of the return value
      */
-    public int sampleMethod(int y)
+    public static void main(String[] args)
     {
-        // put your code here
-        return x+y;
-    }
-
+        Scanner s = new Scanner(System.in);
+        System.out.print("Enter the year: ");
+        String output = "";
+        int year = s.nextInt();
+        if ((year%4==0) && (!(year%100==0) || (year%400==0)))
+        {
+            output = " is a leap year";
+        }
+        else
+        {
+            output = " is not a leap year";
+        }
+    
+        System.out.print(year);
+        System.out.println(output);
+   }
 }
