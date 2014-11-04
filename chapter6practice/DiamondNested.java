@@ -12,14 +12,14 @@ public class DiamondNested
         { 
             String ast = "";
             int count = 0;
-            while (2 * i - 1 > count && count < 7 )
+            while (2 * i - 1 > count && count < input*2 -1 )
             {
                 ast += "*"; 
                 count += 1;
             }
             if (i > input)
             {
-                ast = ast.substring(0,ast.length() - 2 * (i-4) );
+                ast = ast.substring(0,ast.length() - 2 * (i-input) );
             }
             while (ast.length() < 2* input -1)
             {
