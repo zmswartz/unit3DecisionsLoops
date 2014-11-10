@@ -4,6 +4,7 @@ import info.gridworld.actor.Rock;
 import info.gridworld.grid.Grid;
 import info.gridworld.grid.BoundedGrid;
 import info.gridworld.grid.Location;
+import java.util.ArrayList;
 
 /**
  * Game of Life starter code. Demonstrates how to create and populate the game using the GridWorld framework.
@@ -18,13 +19,22 @@ public class GameOfLife
     private ActorWorld world;
     
     // the game board will have 5 rows and 5 columns
-    private final int ROWS = 5;
-    private final int COLS = 5;
+    private final int ROWS = 15;
+    private final int COLS = 20;
     
-    // constants for the location of the three cells initially alive
-    private final int X1 = 0, Y1 = 2;
-    private final int X2 = 2, Y2 = 0;
-    private final int X3 = 2, Y3 = 1;
+    // constants for the location of the twelve cells initially alive
+    private final int X1 = 1, Y1 = 0;
+    private final int X2 = 1, Y2 = 1;
+    private final int X3 = 1, Y3 = 2;
+    private final int X4 = 5, Y4 = 1;
+    private final int X5 = 5, Y5 = 2;
+    private final int X6 = 6, Y6 = 1;
+    private final int X7 = 6, Y7 = 2;
+    private final int X8 = 1, Y8 = 7;
+    private final int X9 = 2, Y9 = 7;
+    private final int X10 = 2, Y10 = 5;
+    private final int X11 = 3, Y11 = 7;
+    private final int X12 = 3, Y12 = 6;
 
     /**
      * Default constructor for objects of class GameOfLife
@@ -32,7 +42,7 @@ public class GameOfLife
      * @post    the game will be initialized and populated with the initial state of cells
      * 
      */
-    public GameOfLife()
+    public GameOfLife() 
     {
         // create the grid, of the specified size, that contains Actors
         BoundedGrid<Actor> grid = new BoundedGrid<Actor>(ROWS, COLS);
@@ -73,6 +83,42 @@ public class GameOfLife
         Rock rock3 = new Rock();
         Location loc3 = new Location(X3, Y3);
         grid.put(loc3, rock3);
+        
+        Rock rock4 = new Rock();
+        Location loc4 = new Location(X4, Y4);
+        grid.put(loc4, rock4);
+        
+        Rock rock5 = new Rock();
+        Location loc5 = new Location(X5, Y5);
+        grid.put(loc5, rock5);
+        
+        Rock rock6 = new Rock();
+        Location loc6 = new Location(X6, Y6);
+        grid.put(loc6, rock6);
+        
+        Rock rock7 = new Rock();
+        Location loc7 = new Location(X7, Y7);
+        grid.put(loc7, rock7);
+        
+        Rock rock8 = new Rock();
+        Location loc8 = new Location(X8, Y8);
+        grid.put(loc8, rock8);
+        
+        Rock rock9 = new Rock();
+        Location loc9 = new Location(X9, Y9);
+        grid.put(loc9, rock9);
+        
+        Rock rock10 = new Rock();
+        Location loc10 = new Location(X10, Y10);
+        grid.put(loc10, rock10);
+        
+        Rock rock11 = new Rock();
+        Location loc11 = new Location(X11, Y11);
+        grid.put(loc11, rock11);
+        
+        Rock rock12 = new Rock();
+        Location loc12 = new Location(X12, Y12);
+        grid.put(loc12, rock12);
     }
 
     /**
@@ -83,16 +129,81 @@ public class GameOfLife
      * @post    the world has been populated with a new grid containing the next generation
      * 
      */
-    private void createNextGeneration()
+    public void createNextGeneration()
     {
         /** You will need to read the documentation for the World, Grid, and Location classes
          *      in order to implement the Game of Life algorithm and leverage the GridWorld framework.
          */
-        
+
         // create the grid, of the specified size, that contains Actors
         Grid<Actor> grid = world.getGrid();
-        
-        // insert magic here...
+        BoundedGrid<Actor> grid2 = new BoundedGrid<Actor>(ROWS, COLS);
+        for(int row = 0; row < ROWS; row++)
+        {
+            for(int col = 0; col < COLS; col++)
+            {
+                Actor actor = getActor(row,col);
+                Actor actorNW = getActor(row-1,col-1);
+                Actor actorN = getActor(row-1,col);
+                Actor actorNE = getActor(row-1,col+1);
+                Actor actorW = getActor(row,col-1);
+                Actor actorE = getActor(row,col+1);
+                Actor actorSW = getActor(row+1,col-1);
+                Actor actorS = getActor(row+1,col);
+                Actor actorSE = getActor(row+1,col+1);
+                int count = 0;
+                boolean alive = false;
+                if (actorNW != null)
+                {
+                    count += 1;
+                }
+                if (actorN != null)
+                {
+                    count += 1;
+                }
+                if (actorNE != null)
+                {
+                    count += 1;
+                }
+                if (actorW != null)
+                {
+                    count += 1;
+                }
+                if (actorE != null)
+                {
+                    count += 1;
+                }
+                if (actorSW != null)
+                {
+                    count += 1;
+                }
+                if (actorS != null)
+                {
+                    count += 1;
+                }
+                if (actorSE != null)
+                {
+                    count += 1;
+                }
+                if (count == 3)
+                {
+                    alive = true;
+                }
+                else if (actor != null  && count == 2)
+                {
+                    alive = true;
+                }
+                if (alive == true)
+                {
+                    Rock rock1 = new Rock();
+                    Location loc1 = new Location(row, col);
+                    grid2.put(loc1, rock1);
+                }
+            }
+        }
+
+        world.setGrid(grid2);
+
         
     }
     
@@ -106,6 +217,11 @@ public class GameOfLife
      */
     public Actor getActor(int row, int col)
     {
+        if (row < 0 || col < 0 || row >= ROWS || col >= COLS)
+        {
+            return null;
+        }
+         
         Location loc = new Location(row, col);
         Actor actor = world.getGrid().get(loc);
         return actor;
@@ -136,9 +252,15 @@ public class GameOfLife
      * Creates an instance of this class. Provides convenient execution.
      *
      */
-    public static void main(String[] args)
+    public static void main(String[] args) throws InterruptedException
     {
         GameOfLife game = new GameOfLife();
+        for (int i = 0;i < 10; i++)
+        {
+            Thread.sleep(200);
+            game.createNextGeneration();
+            game.world.show();
+        }
     }
 
 }
