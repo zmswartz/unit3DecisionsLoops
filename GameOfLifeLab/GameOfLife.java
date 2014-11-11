@@ -5,7 +5,7 @@ import info.gridworld.grid.Grid;
 import info.gridworld.grid.BoundedGrid;
 import info.gridworld.grid.Location;
 import java.util.ArrayList;
-
+import java.util.Scanner;
 /**
  * Game of Life starter code. Demonstrates how to create and populate the game using the GridWorld framework.
  * Also demonstrates how to provide accessor methods to make the class testable by unit tests.
@@ -137,11 +137,13 @@ public class GameOfLife
 
         // create the grid, of the specified size, that contains Actors
         Grid<Actor> grid = world.getGrid();
+        // create a new grid for the next generation
         BoundedGrid<Actor> grid2 = new BoundedGrid<Actor>(ROWS, COLS);
         for(int row = 0; row < ROWS; row++)
         {
             for(int col = 0; col < COLS; col++)
             {
+                // Gets the actor of all of the neighbors
                 Actor actor = getActor(row,col);
                 Actor actorNW = getActor(row-1,col-1);
                 Actor actorN = getActor(row-1,col);
@@ -151,6 +153,7 @@ public class GameOfLife
                 Actor actorSW = getActor(row+1,col-1);
                 Actor actorS = getActor(row+1,col);
                 Actor actorSE = getActor(row+1,col+1);
+                // counts all of the neighbors that are alive (not null)
                 int count = 0;
                 boolean alive = false;
                 if (actorNW != null)
@@ -185,6 +188,8 @@ public class GameOfLife
                 {
                     count += 1;
                 }
+                // Determines whether or not the current index should be alive or not
+                // based on the current actor and how many of its neighbors are alive
                 if (count == 3)
                 {
                     alive = true;
@@ -193,6 +198,7 @@ public class GameOfLife
                 {
                     alive = true;
                 }
+                // Adds a rock to the new gird if it will be alive in the next generation
                 if (alive == true)
                 {
                     Rock rock1 = new Rock();
@@ -201,14 +207,15 @@ public class GameOfLife
                 }
             }
         }
-
+        // Sets the 
         world.setGrid(grid2);
 
         
     }
     
     /**
-     * Returns the actor at the specified row and column. Intended to be used for unit testing.
+     * Returns the actor at the specified row and column. Intended to be used for unit testing.  If the index
+     * is out of the grid, null is returned.
      *
      * @param   row the row (zero-based index) of the actor to return
      * @param   col the column (zero-based index) of the actor to return
@@ -249,12 +256,14 @@ public class GameOfLife
     
     
     /**
-     * Creates an instance of this class. Provides convenient execution.
-     *
+     * Creates an instance of this class and then runs createNextGeneration ten times.
+     * Provides convenient execution.
+     * 
      */
     public static void main(String[] args) throws InterruptedException
     {
         GameOfLife game = new GameOfLife();
+
         for (int i = 0;i < 10; i++)
         {
             Thread.sleep(200);
@@ -262,5 +271,6 @@ public class GameOfLife
             game.world.show();
         }
     }
+    
 
 }

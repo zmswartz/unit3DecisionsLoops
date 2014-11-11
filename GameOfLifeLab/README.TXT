@@ -84,10 +84,10 @@ Submission:
 * 
 * 
 * Requirements Document:
-* The grid will be have 15 rows and 25 columns and is not boundless.
-* Live cells will be a black dot and dead cells will be empty (white)
+* The grid will be have 15 rows and 22 columns and is not boundless.
+* Live cells will be a black rock and dead cells will be empty (white)
 * Patterns: a still life, occilator, and one of the moving shapes all hardcoded in.
-* The game runs for 100 generations, then stops.  If I have time it will ask the prompt
-* the user to continue or stop every 100 generations.
-* Time between each generation is one tenth of a second.
+* The game runs for 10 generations, then stops.  If I have time it will ask the prompt
+* the user to continue or stop every 10 generations.
+* Time between each generation is two tenths of a second.
 * No wrap around.  Edges are considered dead.
