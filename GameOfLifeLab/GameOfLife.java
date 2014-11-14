@@ -207,7 +207,7 @@ public class GameOfLife
                 }
             }
         }
-        // Sets the 
+        // Sets the grid of the world to the new grid of the next generations
         world.setGrid(grid2);
 
         
@@ -224,6 +224,7 @@ public class GameOfLife
      */
     public Actor getActor(int row, int col)
     {
+        // returns null if either is out of bounds
         if (row < 0 || col < 0 || row >= ROWS || col >= COLS)
         {
             return null;
@@ -263,7 +264,7 @@ public class GameOfLife
     public static void main(String[] args) throws InterruptedException
     {
         GameOfLife game = new GameOfLife();
-
+        // runs create generation ten times
         for (int i = 0;i < 10; i++)
         {
             Thread.sleep(200);
